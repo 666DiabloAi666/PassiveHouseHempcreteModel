@@ -1,0 +1,69 @@
+Phase 1: Integration of LN₂ Intelligence into PassiveHouseHempcreteModel
+
+Goal: Bring in NeroKeraNet, RL agent, and AI control logic.
+
+Action:
+
+Create a pressure_chamber/ submodule inside the repo:
+
+PassiveHouseHempcreteModel/
+└── pressure_chamber/
+    ├── nero_kera_net.py
+    ├── dqn_agent.py
+    ├── env_hempcrete.py
+    ├── hempcrete_model.py
+
+Add a master controller to link it with your passive model.
+
+
+
+---
+
+Phase 2: Extend Hempcrete Physics & Thermodynamics
+
+Goal: Enhance thermal/strain/pressure simulation using intelligent control.
+
+Additions:
+
+Modify the current thermal/diffusion/insulation models to include:
+
+LN₂ phase change cooling.
+
+Stress/strain under cryogenic pressure.
+
+Carbonization potential for structural transformation.
+
+
+Add to hempcrete_model.py:
+
+def thermal_cooling_ln2(temp, ln2_fraction):
+    return temp - 30 * ln2_fraction  # basic model
+
+def structural_density_after_carbonization(base_density, ln2, time_sec):
+    multiplier = 1 + ln2 * min(time_sec / 60, 1)
+    return base_density * multiplier
+
+
+
+---
+
+Phase 3: Diamondization AI Fusion Logic
+
+Goal: Add simulation for carbon phase shift under LN₂ compression + ML decision system.
+
+AI Hook (in main_controller.py or ai_control.py)
+
+from pressure_chamber.nero_kera_net import NeroKeraNet
+from pressure_chamber.dqn_agent import DQNAgent
+from pressure_chamber.env_hempcrete import HempcreteEnv
+
+model = torch.load("trained_chamber_policy.pt")
+rl_agent = DQNAgent()
+ai = NeroKeraNet(model, rl_agent)
+
+def ai_step_loop(pressure, temp, ln2, strain):
+    action = ai.decide(pressure, temp, ln2, strain)
+    return action  # inject_ln2, hold, emergency_release
+
+
+---
